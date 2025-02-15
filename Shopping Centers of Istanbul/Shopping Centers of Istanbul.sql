@@ -4,10 +4,10 @@ FROM [Project6 - ShoppingMallOfIStanbul].[dbo].[customer_shopping_data]
 
 ------------------------------------------------------------------------------------------------------------------
 
--- ПРЕОБРАЗОВАНИЕ ДАННЫХ
+-- РџР Р•РћР‘Р РђР—РћР’РђРќРР• Р”РђРќРќР«РҐ
 ---------------------------
 
--- Тип колонки quantity изменить на INT
+-- РўРёРї РєРѕР»РѕРЅРєРё quantity РёР·РјРµРЅРёС‚СЊ РЅР° INT
 
 ALTER TABLE [customer_shopping_data]
 ALTER COLUMN quantity INT
@@ -15,7 +15,7 @@ ALTER COLUMN quantity INT
 UPDATE [customer_shopping_data]
 SET quantity = CONVERT(int, quantity)
 --------------------------------------
--- Тип колонки price изменить на FLOAT
+-- РўРёРї РєРѕР»РѕРЅРєРё price РёР·РјРµРЅРёС‚СЊ РЅР° FLOAT
 
 ALTER TABLE [customer_shopping_data]
 ALTER COLUMN price FLOAT
@@ -23,7 +23,7 @@ ALTER COLUMN price FLOAT
 UPDATE [customer_shopping_data]
 SET price = CONVERT(float, price)
 ----------------------------------
--- Тип колонки invoice_date изменить на DATE
+-- РўРёРї РєРѕР»РѕРЅРєРё invoice_date РёР·РјРµРЅРёС‚СЊ РЅР° DATE
 
 ALTER TABLE [customer_shopping_data]
 ALTER COLUMN invoice_date DATE
@@ -33,10 +33,10 @@ SET invoice_date = CONVERT(date, invoice_date)
 
 ------------------------------------------------
 
--- ДОПОЛНИТЕЛЬНЫЕ КОЛОНКИ
+-- Р”РћРџРћР›РќРРўР•Р›Р¬РќР«Р• РљРћР›РћРќРљР
 --------------------------
 
--- Добавление столбца Profit - кол-во приобретенных товаров * на цену за ед. товара
+-- Р”РѕР±Р°РІР»РµРЅРёРµ СЃС‚РѕР»Р±С†Р° Profit - РєРѕР»-РІРѕ РїСЂРёРѕР±СЂРµС‚РµРЅРЅС‹С… С‚РѕРІР°СЂРѕРІ * РЅР° С†РµРЅСѓ Р·Р° РµРґ. С‚РѕРІР°СЂР°
 
 ALTER TABLE [customer_shopping_data]
 ADD Profit FLOAT
@@ -45,7 +45,7 @@ UPDATE [customer_shopping_data]
 SET Profit = quantity * price
 ------------------------------------------------
 
--- Новый столбец - Разбивка возраста на возрастные группы
+-- РќРѕРІС‹Р№ СЃС‚РѕР»Р±РµС† - Р Р°Р·Р±РёРІРєР° РІРѕР·СЂР°СЃС‚Р° РЅР° РІРѕР·СЂР°СЃС‚РЅС‹Рµ РіСЂСѓРїРїС‹
 
 ALTER TABLE [customer_shopping_data]
 ADD AgeGroup VARCHAR(10)
@@ -57,7 +57,7 @@ SET AgeGroup = CASE WHEN age < 20 THEN '< 20'
 					WHEN age BETWEEN 30 AND 34 THEN '30-34'
 					WHEN age BETWEEN 35 AND 39 THEN '35-39'
 					WHEN age BETWEEN 40 AND 44 THEN '40-44'
-				    WHEN age BETWEEN 45 AND 49 THEN '45-49'
+				        WHEN age BETWEEN 45 AND 49 THEN '45-49'
 					WHEN age BETWEEN 50 AND 54 THEN '50-54'
 					WHEN age BETWEEN 55 AND 59 THEN '55-59'
 					WHEN age BETWEEN 60 AND 64 THEN '60-64'
@@ -65,36 +65,36 @@ SET AgeGroup = CASE WHEN age < 20 THEN '< 20'
 					END
 -----------------------------------------------------------
 
--- Добавление столбца Count для подсчета кол-во покупателей
+-- Р”РѕР±Р°РІР»РµРЅРёРµ СЃС‚РѕР»Р±С†Р° Count РґР»СЏ РїРѕРґСЃС‡РµС‚Р° РєРѕР»-РІРѕ РїРѕРєСѓРїР°С‚РµР»РµР№
 
 ALTER TABLE [customer_shopping_data]
 ADD count_cust INT
 
 UPDATE [customer_shopping_data]
-SET count_cust = 1			-- работает в этом случае, так как все покупатели (ID покупателя) уникальные
+SET count_cust = 1	-- СЂР°Р±РѕС‚Р°РµС‚ РІ СЌС‚РѕРј СЃР»СѓС‡Р°Рµ, С‚Р°Рє РєР°Рє РІСЃРµ РїРѕРєСѓРїР°С‚РµР»Рё (ID РїРѕРєСѓРїР°С‚РµР»СЏ) СѓРЅРёРєР°Р»СЊРЅС‹Рµ
 -----------------------------------------------------------
 
 
 -------------------------------------------------------------------------------------------------------------------
 
--- (EDA) ИССЛЕДОВАТЕЛЬСКИЙ АНАЛИЗ ДАННЫХ 
+-- (EDA) РРЎРЎР›Р•Р”РћР’РђРўР•Р›Р¬РЎРљРР™ РђРќРђР›РР— Р”РђРќРќР«РҐ 
 -----------------------------------------
 
--- Количество запросов
+-- РљРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РїСЂРѕСЃРѕРІ
 
 SELECT count(invoice_no) 
 FROM customer_shopping_data
 
 
 
--- Количество уникальных покупателей
+-- РљРѕР»РёС‡РµСЃС‚РІРѕ СѓРЅРёРєР°Р»СЊРЅС‹С… РїРѕРєСѓРїР°С‚РµР»РµР№
 
 SELECT count(DISTINCT customer_id) 
 FROM customer_shopping_data
 
 
 
--- Проверка на дубликаты
+-- РџСЂРѕРІРµСЂРєР° РЅР° РґСѓР±Р»РёРєР°С‚С‹
 
 SELECT invoice_no,
 	    count(*)
@@ -104,14 +104,14 @@ HAVING count(*) > 1
 
 
 
--- Период запросов
+-- РџРµСЂРёРѕРґ Р·Р°РїСЂРѕСЃРѕРІ
 
 SELECT min(invoice_date) AS 'Date First', max(invoice_date) AS 'Date Last'
 FROM customer_shopping_data
 
 
 
--- Категории товаров
+-- РљР°С‚РµРіРѕСЂРёРё С‚РѕРІР°СЂРѕРІ
 
 SELECT DISTINCT category 
 FROM customer_shopping_data
@@ -119,14 +119,14 @@ ORDER BY category
 
 
 
--- Диапазон возраста покупателей
+-- Р”РёР°РїР°Р·РѕРЅ РІРѕР·СЂР°СЃС‚Р° РїРѕРєСѓРїР°С‚РµР»РµР№
 
 SELECT min(age) 'Min Age', max(age) AS 'Max age'
 FROM customer_shopping_data
 
 
 
--- Торговые центры
+-- РўРѕСЂРіРѕРІС‹Рµ С†РµРЅС‚СЂС‹
 
 SELECT DISTINCT shopping_mall
 FROM customer_shopping_data
@@ -134,7 +134,7 @@ ORDER BY shopping_mall
 
 
 
--- Виды платежей
+-- Р’РёРґС‹ РїР»Р°С‚РµР¶РµР№
 
 SELECT DISTINCT payment_method
 FROM customer_shopping_data
@@ -142,34 +142,34 @@ ORDER BY 1
 
 
 
--- Гендерная группа
+-- Р“РµРЅРґРµСЂРЅР°СЏ РіСЂСѓРїРїР°
 
 SELECT count(gender) AS 'Female', (SELECT count(gender) 
-									FROM customer_shopping_data
-                                    WHERE gender = 'Male') AS 'Male'
+FROM customer_shopping_data
+WHERE gender = 'Male') AS 'Male'
 FROM customer_shopping_data
 WHERE gender = 'Female'
 
 
--- Диапазон цен (макс, мин)
+-- Р”РёР°РїР°Р·РѕРЅ С†РµРЅ (РјР°РєСЃ, РјРёРЅ)
 
 SELECT min(price) 'Min Price', max(price) AS 'Max Price'
 FROM customer_shopping_data
 
 --------------------------------------------------------------------------------------------------------------
 
--- АНАЛИЗ
+-- РђРќРђР›РР—
 ---------------------------------------------------------------------------------------------------------------
 
--- ОБЩИЙ АНАЛИЗ
+-- РћР‘Р©РР™ РђРќРђР›РР—
 -----------------
--- Кол-во проданых товаров и доход за весь период наблюдения
+-- РљРѕР»-РІРѕ РїСЂРѕРґР°РЅС‹С… С‚РѕРІР°СЂРѕРІ Рё РґРѕС…РѕРґ Р·Р° РІРµСЃСЊ РїРµСЂРёРѕРґ РЅР°Р±Р»СЋРґРµРЅРёСЏ
 
-SELECT sum(quantity) AS 'Количество', round(sum(quantity * price), 2) AS 'Доход'
+SELECT sum(quantity) AS 'РљРѕР»РёС‡РµСЃС‚РІРѕ', round(sum(quantity * price), 2) AS 'Р”РѕС…РѕРґ'
 FROM customer_shopping_data
 
 
--- Какая цена за еденицу товара встречается чаще всего
+-- РљР°РєР°СЏ С†РµРЅР° Р·Р° РµРґРµРЅРёС†Сѓ С‚РѕРІР°СЂР° РІСЃС‚СЂРµС‡Р°РµС‚СЃСЏ С‡Р°С‰Рµ РІСЃРµРіРѕ
 
 SELECT price, count(price) AS 'Count price'
 FROM customer_shopping_data
@@ -177,7 +177,7 @@ GROUP BY price
 ORDER BY 2 DESC
 
 
--- Какое кол-во товаров покупают чаще всего 
+-- РљР°РєРѕРµ РєРѕР»-РІРѕ С‚РѕРІР°СЂРѕРІ РїРѕРєСѓРїР°СЋС‚ С‡Р°С‰Рµ РІСЃРµРіРѕ 
 
 SELECT quantity, count(quantity) AS 'Count quantity'
 FROM customer_shopping_data
@@ -186,10 +186,10 @@ ORDER BY 2 DESC
 
 -------------------------------------------------------------
 
--- АНАЛИЗ ЗА ТОРГОВЫМ ЦЕНТРОМ
+-- РђРќРђР›РР— Р—Рђ РўРћР Р“РћР’Р«Рњ Р¦Р•РќРўР РћРњ
 ------------------------------
 
--- Какой торговый центр посещают чаще всего
+-- РљР°РєРѕР№ С‚РѕСЂРіРѕРІС‹Р№ С†РµРЅС‚СЂ РїРѕСЃРµС‰Р°СЋС‚ С‡Р°С‰Рµ РІСЃРµРіРѕ
 
 SELECT shopping_mall, count(shopping_mall) AS 'Count shopping mall'
 FROM customer_shopping_data
@@ -197,18 +197,18 @@ GROUP BY shopping_mall
 ORDER BY 2 DESC
 
 
--- Анализ продаж за торговым центром
+-- РђРЅР°Р»РёР· РїСЂРѕРґР°Р¶ Р·Р° С‚РѕСЂРіРѕРІС‹Рј С†РµРЅС‚СЂРѕРј
 
-SELECT shopping_mall AS 'Место продаж', 
-		sum(quantity) AS 'Количество товаров',
-		round(sum(Profit), 2) AS 'Доход', 
-		sum(Profit) / (SELECT sum(Profit) FROM customer_shopping_data) * 100 AS 'Частка дохода'
+SELECT shopping_mall AS 'РњРµСЃС‚Рѕ РїСЂРѕРґР°Р¶', 
+		sum(quantity) AS 'РљРѕР»РёС‡РµСЃС‚РІРѕ С‚РѕРІР°СЂРѕРІ',
+		round(sum(Profit), 2) AS 'Р”РѕС…РѕРґ', 
+		sum(Profit) / (SELECT sum(Profit) FROM customer_shopping_data) * 100 AS 'Р§Р°СЃС‚РєР° РґРѕС…РѕРґР°'
 FROM customer_shopping_data
 GROUP BY shopping_mall
 ORDER BY 4 DESC
 
 
--- Кол-во покупателей в зависимости от торгового центра и возрастной группы
+-- РљРѕР»-РІРѕ РїРѕРєСѓРїР°С‚РµР»РµР№ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РѕСЂРіРѕРІРѕРіРѕ С†РµРЅС‚СЂР° Рё РІРѕР·СЂР°СЃС‚РЅРѕР№ РіСЂСѓРїРїС‹
 
 SELECT a.shopping_mall,
 	   sum(CASE WHEN b.AgeGroup = '< 20' THEN b.count_cust ELSE 0 end) AS '< 20',
@@ -230,36 +230,45 @@ ORDER BY 2 DESC
 
 ------------------------------------------------------------------
 
--- АНАЛИЗ ЗА КАТЕГОРИЯМИ
+-- РђРќРђР›РР— Р—Рђ РљРђРўР•Р“РћР РРЇРњР
 -------------------------
 
--- Анализ продаж за категориями (Кол-во, доход, частка)
+-- РљР°РєРѕР№ С‚РѕСЂРіРѕРІС‹Р№ С†РµРЅС‚СЂ РїРѕСЃРµС‰Р°СЋС‚ С‡Р°С‰Рµ РІСЃРµРіРѕ
 
-SELECT category AS 'Категории', 
-		sum(quantity) AS 'Количество товаров',
-		round(sum(Profit), 2) AS 'Доход', 
-		sum(Profit) / (SELECT sum(Profit) FROM customer_shopping_data) * 100 AS 'Частка дохода'
+SELECT category, count(category) AS 'Count category'
 FROM customer_shopping_data
 GROUP BY category
-ORDER BY 4 DESC
+ORDER BY 2 DESC
+
+
+
+-- РђРЅР°Р»РёР· РїСЂРѕРґР°Р¶ Р·Р° РєР°С‚РµРіРѕСЂРёСЏРјРё (РљРѕР»-РІРѕ, РґРѕС…РѕРґ, С‡Р°СЃС‚РєР°)
+
+SELECT category AS 'РљР°С‚РµРіРѕСЂРёРё', 
+		sum(quantity) AS 'РљРѕР»РёС‡РµСЃС‚РІРѕ С‚РѕРІР°СЂРѕРІ',
+		round(sum(Profit), 2) AS 'Р”РѕС…РѕРґ', 
+		sum(Profit) / (SELECT sum(Profit) FROM customer_shopping_data) * 100 AS 'Р§Р°СЃС‚РєР° РґРѕС…РѕРґР°'
+FROM customer_shopping_data
+GROUP BY category
+ORDER BY 2 DESC
 
 ----------------------------------------------------------------------------------------
 
--- АНАЛИЗ ЗА ГЕНДЕРОМ (+ разбивка на категории)
+-- РђРќРђР›РР— Р—Рђ Р“Р•РќР”Р•Р РћРњ (+ СЂР°Р·Р±РёРІРєР° РЅР° РєР°С‚РµРіРѕСЂРёРё)
 -----------------------------------------------
 
--- Анализ продаж за гендером
+-- РђРЅР°Р»РёР· РїСЂРѕРґР°Р¶ Р·Р° РіРµРЅРґРµСЂРѕРј
 
-SELECT gender AS 'Гендер', 
-		sum(quantity) AS 'Количество товаров',
-		round(sum(Profit), 2) AS 'Доход', 
-		sum(Profit) / (SELECT sum(Profit) FROM customer_shopping_data) * 100 AS 'Частка дохода'
+SELECT gender AS 'Р“РµРЅРґРµСЂ', 
+		sum(quantity) AS 'РљРѕР»РёС‡РµСЃС‚РІРѕ С‚РѕРІР°СЂРѕРІ',
+		round(sum(Profit), 2) AS 'Р”РѕС…РѕРґ', 
+		sum(Profit) / (SELECT sum(Profit) FROM customer_shopping_data) * 100 AS 'Р§Р°СЃС‚РєР° РґРѕС…РѕРґР°'
 FROM customer_shopping_data
 GROUP BY gender
 ORDER BY 4 DESC
 
 
--- Кол-во проданых товаров в зависимости от категории и гендера
+-- РљРѕР»-РІРѕ РїСЂРѕРґР°РЅС‹С… С‚РѕРІР°СЂРѕРІ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РєР°С‚РµРіРѕСЂРёРё Рё РіРµРЅРґРµСЂР°
 
 SELECT a.category,
 	   sum(CASE WHEN b.gender = 'Female' THEN b.quantity ELSE 0 end) AS 'Female',
@@ -271,7 +280,7 @@ INNER JOIN customer_shopping_data b
 GROUP BY a.category
 
 
--- Прибыль в зависимости от категории и гендера
+-- РџСЂРёР±С‹Р»СЊ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РєР°С‚РµРіРѕСЂРёРё Рё РіРµРЅРґРµСЂР°
 
 SELECT a.category,
 	   sum(CASE WHEN b.gender = 'Female' THEN b.Profit ELSE 0 end) AS 'Female',
@@ -285,10 +294,10 @@ ORDER BY 2 DESC
 
 -----------------------------------------------------------------------------------
 
--- АНАЛИЗ ЗА ВОЗРАСТНОЙ ГРУППОЙ (+ разбивка на гендер)
+-- РђРќРђР›РР— Р—Рђ Р’РћР—Р РђРЎРўРќРћР™ Р“Р РЈРџРџРћР™ (+ СЂР°Р·Р±РёРІРєР° РЅР° РіРµРЅРґРµСЂ)
 ------------------------------------------------------
 
--- Какая возрастная группа покупает чаще всего 
+-- РљР°РєР°СЏ РІРѕР·СЂР°СЃС‚РЅР°СЏ РіСЂСѓРїРїР° РїРѕРєСѓРїР°РµС‚ С‡Р°С‰Рµ РІСЃРµРіРѕ 
 
 SELECT AgeGroup, count(AgeGroup) AS 'Count Age Group'
 FROM customer_shopping_data
@@ -296,18 +305,18 @@ GROUP BY AgeGroup
 ORDER BY 2 DESC
 
 
--- Анализ продаж за возрастной группой (Кол-во, доход, частка)
+-- РђРЅР°Р»РёР· РїСЂРѕРґР°Р¶ Р·Р° РІРѕР·СЂР°СЃС‚РЅРѕР№ РіСЂСѓРїРїРѕР№ (РљРѕР»-РІРѕ, РґРѕС…РѕРґ, С‡Р°СЃС‚РєР°)
 
-SELECT AgeGroup AS 'Возрастная группа', 
-		sum(quantity) AS 'Количество товаров',
-		round(sum(Profit), 2) AS 'Доход', 
-		sum(Profit) / (SELECT sum(Profit) FROM customer_shopping_data) * 100 AS 'Частка дохода'
+SELECT AgeGroup AS 'Р’РѕР·СЂР°СЃС‚РЅР°СЏ РіСЂСѓРїРїР°', 
+		sum(quantity) AS 'РљРѕР»РёС‡РµСЃС‚РІРѕ С‚РѕРІР°СЂРѕРІ',
+		round(sum(Profit), 2) AS 'Р”РѕС…РѕРґ', 
+		sum(Profit) / (SELECT sum(Profit) FROM customer_shopping_data) * 100 AS 'Р§Р°СЃС‚РєР° РґРѕС…РѕРґР°'
 FROM customer_shopping_data
 GROUP BY AgeGroup
 ORDER BY 4 DESC
 
 
--- Количество покупателей по возрастным группам и гендеру
+-- РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРєСѓРїР°С‚РµР»РµР№ РїРѕ РІРѕР·СЂР°СЃС‚РЅС‹Рј РіСЂСѓРїРїР°Рј Рё РіРµРЅРґРµСЂСѓ
 
 SELECT a.AgeGroup,
 	   sum(CASE WHEN b.gender = 'Male' THEN b.count_cust ELSE 0 end) AS 'Male',
@@ -319,7 +328,7 @@ INNER JOIN customer_shopping_data b
 GROUP BY a.AgeGroup
 
 
--- Прибыль в зависимости от возрастной группы и гендера 
+-- РџСЂРёР±С‹Р»СЊ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РІРѕР·СЂР°СЃС‚РЅРѕР№ РіСЂСѓРїРїС‹ Рё РіРµРЅРґРµСЂР° 
 
 SELECT a.AgeGroup,
 	   sum(CASE WHEN b.gender = 'Female' THEN b.Profit ELSE 0 end) AS 'Female',
@@ -334,10 +343,10 @@ ORDER BY 2 DESC
 
 -------------------------------------------------------------------------------
 
--- АНАЛИЗ ЗА МЕТОДОМ ОПЛАТЫ
+-- РђРќРђР›РР— Р—Рђ РњР•РўРћР”РћРњ РћРџР›РђРўР«
 ----------------------------
 
--- Каким платежным метод пользуются чаще всего
+-- РљР°РєРёРј РїР»Р°С‚РµР¶РЅС‹Рј РјРµС‚РѕРґ РїРѕР»СЊР·СѓСЋС‚СЃСЏ С‡Р°С‰Рµ РІСЃРµРіРѕ
 
 SELECT payment_method, count(payment_method) AS 'Count payment method'
 FROM customer_shopping_data
@@ -345,51 +354,57 @@ GROUP BY payment_method
 ORDER BY 2 DESC
 
 
--- Анализ продаж за методом оплаты
+-- РђРЅР°Р»РёР· РїСЂРѕРґР°Р¶ Р·Р° РјРµС‚РѕРґРѕРј РѕРїР»Р°С‚С‹
 
-SELECT payment_method AS 'Метод оплаты', 
-		sum(quantity) AS 'Количество товаров',
-		round(sum(Profit), 2) AS 'Доход', 
-		sum(Profit) / (SELECT sum(Profit) FROM customer_shopping_data) * 100 AS 'Частка дохода'
+SELECT payment_method AS 'РњРµС‚РѕРґ РѕРїР»Р°С‚С‹', 
+		sum(quantity) AS 'РљРѕР»РёС‡РµСЃС‚РІРѕ С‚РѕРІР°СЂРѕРІ',
+		round(sum(Profit), 2) AS 'Р”РѕС…РѕРґ', 
+		sum(Profit) / (SELECT sum(Profit) FROM customer_shopping_data) * 100 AS 'Р§Р°СЃС‚РєР° РґРѕС…РѕРґР°'
 FROM customer_shopping_data
 GROUP BY payment_method
 ORDER BY 4 DESC
 
 -----------------------------------------------------------------------
 
--- АНАЛИЗ ЗА ПЕРИОДОМ
+-- РђРќРђР›РР— Р—Рђ РџР•Р РРћР”РћРњ
 ----------------------
 
--- Анализ продаж по месяцам
+-- РђРЅР°Р»РёР· РїСЂРѕРґР°Р¶ РїРѕ РјРµСЃСЏС†Р°Рј
 
 SELECT 
-	   year(invoice_date) AS 'Год', month(invoice_date) AS 'Месяц', 
-	   sum(quantity) AS 'Количество товаров',
-	   round(sum(quantity * price), 2) AS 'Доход'
+	   year(invoice_date) AS 'Р“РѕРґ', month(invoice_date) AS 'РњРµСЃСЏС†', 
+	   sum(quantity) AS 'РљРѕР»РёС‡РµСЃС‚РІРѕ С‚РѕРІР°СЂРѕРІ',
+	   round(sum(quantity * price), 2) AS 'Р”РѕС…РѕРґ'
 FROM customer_shopping_data
 GROUP BY year(invoice_date), month(invoice_date)
-ORDER BY 1, 2
+ORDER BY 1, 2 
 
+SELECT top 12
+	   month(invoice_date) AS 'РњРµСЃСЏС†', 
+	   sum(quantity) AS 'РљРѕР»РёС‡РµСЃС‚РІРѕ С‚РѕРІР°СЂРѕРІ',
+	   round(sum(quantity * price), 2) AS 'Р”РѕС…РѕРґ'
+FROM customer_shopping_data
+WHERE invoice_date BETWEEN '2021-01-01' AND '2022-12-31' -- РЎРѕРєСЂР°С‰РµРЅРѕ, РїРѕСЃРєРѕР»СЊРєСѓ РґР°РЅРЅС‹Рµ 2023 РіРѕРґР° С‚РѕР»СЊРєРѕ Р·Р° СЏРЅРІР°СЂСЊ-РјР°СЂС‚
+GROUP BY month(invoice_date)
+ORDER BY 3 desc
 
--- 10 дней с наибольшими продажами
+-- 10 РґРЅРµР№ СЃ РЅР°РёР±РѕР»СЊС€РёРјРё РїСЂРѕРґР°Р¶Р°РјРё
 
 SELECT TOP 10
-		invoice_date AS 'Дата', 
-		sum(quantity) AS 'Количество',
-		round(sum(quantity * price), 2) AS 'Доход'
+		invoice_date AS 'Р”Р°С‚Р°', 
+		sum(quantity) AS 'РљРѕР»РёС‡РµСЃС‚РІРѕ',
+		round(sum(quantity * price), 2) AS 'Р”РѕС…РѕРґ'
 FROM customer_shopping_data
 GROUP BY invoice_date
 ORDER BY 3 DESC
 
 
--- 10 дней с наименьшими продажами
+-- 10 РґРЅРµР№ СЃ РЅР°РёРјРµРЅСЊС€РёРјРё РїСЂРѕРґР°Р¶Р°РјРё
 
 SELECT TOP 10
-		invoice_date AS 'Дата', 
-		sum(quantity) AS 'Количество',
-		round(sum(quantity * price), 2) AS 'Доход'
+		invoice_date AS 'Р”Р°С‚Р°', 
+		sum(quantity) AS 'РљРѕР»РёС‡РµСЃС‚РІРѕ',
+		round(sum(quantity * price), 2) AS 'Р”РѕС…РѕРґ'
 FROM customer_shopping_data
 GROUP BY invoice_date
 ORDER BY 3 ASC
-
-
