@@ -18,13 +18,13 @@ UPDATE [Project7 - Movies].[dbo].[movies]
 SET year = CONVERT(INT, year)
 ---------------------------------------------------------
 
--- Возратные ограничения 
+-- Р’РѕР·СЂР°С‚РЅС‹Рµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ 
 
 SELECT distinct rating
 FROM [Project7 - Movies].[dbo].[movies]
 
 
--- анализ фильмов по возрастным ограничениям
+-- Р°РЅР°Р»РёР· С„РёР»СЊРјРѕРІ РїРѕ РІРѕР·СЂР°СЃС‚РЅС‹Рј РѕРіСЂР°РЅРёС‡РµРЅРёСЏРј
 
 SELECT rating, COUNT(rating) AS '# of movies',
 	   round(AVG(score),1) AS 'avg score', 
@@ -38,13 +38,13 @@ ORDER BY 2 desc
 
 ---------------------------------------------------------
 
--- Жанры
+-- Р–Р°РЅСЂС‹
 
 SELECT distinct genre
 FROM [Project7 - Movies].[dbo].[movies]
 
 
--- анализ фильмов по жанрам
+-- Р°РЅР°Р»РёР· С„РёР»СЊРјРѕРІ РїРѕ Р¶Р°РЅСЂР°Рј
 
 SELECT genre, COUNT(genre) AS '# of movies', 
 	   round(AVG(score),1) AS 'avg score', 
@@ -58,14 +58,14 @@ ORDER BY 2 desc
 
 -------------------------------------------------------------
 
--- года релиза
+-- РіРѕРґР° СЂРµР»РёР·Р°
 
 SELECT distinct year
 FROM [Project7 - Movies].[dbo].[movies]
 ORDER BY year
 
 
--- Анализ фильмов по году релиза
+-- РђРЅР°Р»РёР· С„РёР»СЊРјРѕРІ РїРѕ РіРѕРґСѓ СЂРµР»РёР·Р°
 
 SELECT year, COUNT(year) AS '# of movies',
 	   round(AVG(score),1) AS 'avg score', 
@@ -79,14 +79,14 @@ ORDER BY 6 desc, 1 asc
 
 -------------------------------------------------------------
 
--- Режиссеры
+-- Р РµР¶РёСЃСЃРµСЂС‹
 
 SELECT distinct director
 FROM [Project7 - Movies].[dbo].[movies]
 ORDER BY director
 
 
--- Анализ фильмов по Режиссеру
+-- РђРЅР°Р»РёР· С„РёР»СЊРјРѕРІ РїРѕ Р РµР¶РёСЃСЃРµСЂСѓ
 
 SELECT director, COUNT(director) AS '# of movies',
 	   round(AVG(score),1) AS 'avg score', 
@@ -100,14 +100,14 @@ ORDER BY 6 desc
 
 -------------------------------------------------------------
 
--- сценаристы
+-- СЃС†РµРЅР°СЂРёСЃС‚С‹
 
 SELECT distinct writer
 FROM [Project7 - Movies].[dbo].[movies]
 ORDER BY writer
 
 
--- Анализ фильмов по сценаристу
+-- РђРЅР°Р»РёР· С„РёР»СЊРјРѕРІ РїРѕ СЃС†РµРЅР°СЂРёСЃС‚Сѓ
 
 SELECT writer, COUNT(writer) AS '# of movies',
 	   round(AVG(score),1) AS 'avg score', 
@@ -121,14 +121,14 @@ ORDER BY 2 desc, 1 asc
 
 --------------------------------------------------------------
 
--- главная роль
+-- РіР»Р°РІРЅР°СЏ СЂРѕР»СЊ
 
 SELECT distinct star
 FROM [Project7 - Movies].[dbo].[movies]
 ORDER BY star
 
 
--- Анализ фильмов по главной ролью
+-- РђРЅР°Р»РёР· С„РёР»СЊРјРѕРІ РїРѕ РіР»Р°РІРЅРѕР№ СЂРѕР»СЊСЋ
 
 SELECT star, COUNT(star) AS '# of movies',
 	   round(AVG(score),1) AS 'avg score', 
@@ -142,14 +142,14 @@ ORDER BY 2 desc, 1 asc
 
 ------------------------------------------------------------
 
--- страна
+-- СЃС‚СЂР°РЅР°
 
 SELECT distinct country
 FROM [Project7 - Movies].[dbo].[movies]
 ORDER BY country
 
 
--- Анализ фильмов по стране
+-- РђРЅР°Р»РёР· С„РёР»СЊРјРѕРІ РїРѕ СЃС‚СЂР°РЅРµ
 
 SELECT country, COUNT(country) AS '# of movies',
 	   round(AVG(score),1) AS 'avg score', 
@@ -164,14 +164,14 @@ ORDER BY 2 desc, 1 asc
 ------------------------------------------------------------
 
 
--- компания
+-- РєРѕРјРїР°РЅРёСЏ
 
 SELECT distinct company
 FROM [Project7 - Movies].[dbo].[movies]
 ORDER BY company
 
 
--- Анализ фильмов по кинокомпании
+-- РђРЅР°Р»РёР· С„РёР»СЊРјРѕРІ РїРѕ РєРёРЅРѕРєРѕРјРїР°РЅРёРё
 
 SELECT company, COUNT(company) AS '# of movies',
 	   round(AVG(score),1) AS 'avg score', 
