@@ -15,8 +15,10 @@
 * Python (Pandas, MatPlotLib, NumPy)
 * MS Word
 * MS Excel (Vlookup, VBA)
+* Google Sheets
 * MS PowerPoint
 * MS Access
+* MS Outlook
 * Power Pivot
 * Power Query
 * Power BI
